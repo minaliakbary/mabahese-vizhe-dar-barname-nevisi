@@ -1,0 +1,239 @@
+{"template":"app"}
+
+import 'dart:async';
+
+void main() async {
+  print('========== DART DATA TYPES ==========\n');
+
+  // 1. INTEGER: Whole numbers
+  int age = 21;
+  print('int: $age');
+
+  // 2. DOUBLE: Decimal numbers
+  double price = 19.99;
+  print('double: $price');
+
+  // 3. NUM: Can store int or double
+  num number1 = 10;
+  num number2 = 10.5;
+  print('num: $number1, $number2');
+
+  // 4. STRING: Text
+  String name = 'Alex';
+  print('String: $name');
+
+  // 5. BOOL: true or false
+  bool isStudent = true;
+  print('bool: $isStudent');
+
+  // 6. VAR: Dart infers the type
+  var city = 'Berlin';
+  // city = 100; // Error: city is inferred as String
+  print('var: $city');
+
+  // 7. DYNAMIC: Type can change
+  dynamic value = 100;
+  print('dynamic: $value');
+  value = 'Hello Dart';
+  print('dynamic changed: $value');
+
+  // 8. OBJECT: Can hold any non-null Dart object
+  Object objectValue = 'Dart';
+  print('Object: $objectValue');
+  objectValue = 123;
+  print('Object changed: $objectValue');
+
+  // 9. OBJECT?: Can also hold null
+  Object? optionalObject = null;
+  print('Object?: $optionalObject');
+
+  // 10. FINAL: Assign only once
+  final country = 'Germany';
+  print('final: $country');
+
+  // 11. CONST: Compile-time constant
+  const double pi = 3.14159;
+  print('const: $pi');
+
+  // 12. LIST: Ordered collection; duplicates allowed
+  List<String> fruits = ['Apple', 'Banana', 'Apple'];
+  fruits.add('Orange');
+  print('\nList: $fruits');
+  print('First fruit: ${fruits[0]}');
+
+  // 13. SET: Unique values
+  Set<int> numbers = {1, 2, 3, 2};
+  numbers.add(4);
+  print('Set: $numbers');
+
+  // 14. MAP: Key-value pairs
+  Map<String, dynamic> user = {
+    'name': 'Alex',
+    'age': 21,
+    'isStudent': true,
+  };
+  print('Map: $user');
+  print('User name: ${user['name']}');
+
+  // 15. NULLABLE TYPES: ? allows null
+  String? nickname = null;
+  nickname = 'Al';
+  print('\nNullable String: $nickname');
+
+  // Null-aware operator: ??
+  String? username;
+  print('Default username: ${username ?? 'Guest'}');
+
+  // Null-aware access: ?.
+  String? message;
+  print('Message length: ${message?.length}');
+
+  // Null assertion: ! (use only when non-null is guaranteed)
+  String? guaranteedName = 'Alex';
+  print('Name length: ${guaranteedName!.length}');
+
+  // 16. LATE: Initialize later, before first access
+  late String description;
+  description = 'Initialized later';
+  print('\nlate: $description');
+
+  // 17. FUNCTION TYPE
+  int Function(int, int) add = (a, b) => a + b;
+  print('\nFunction: ${add(5, 3)}');
+
+  // Anonymous function
+  var multiply = (int a, int b) {
+    return a * b;
+  };
+  print('Anonymous function: ${multiply(4, 3)}');
+
+  // 18. ENUM: A fixed set of values
+  Status status = Status.loading;
+  print('\nEnum: ${status.name}');
+
+  // 19. CLASS / OBJECT
+  Person person = Person('Sarah', 25);
+  print('\nClass object: $person');
+  print('Person name: ${person.name}');
+  print('Person age: ${person.age}');
+
+  // 20. RECORD: Multiple values in one value (Dart 3+)
+  var coordinates = (10, 20);
+  print('\nRecord: $coordinates');
+  print('X: ${coordinates.$1}');
+  print('Y: ${coordinates.$2}');
+
+  // Named record
+  var product = (name: 'Laptop', price: 999.99);
+  print('Product: ${product.name}, ${product.price}');
+
+  // 21. RUNE: Unicode code points
+  Runes heart = Runes('\u2665');
+  print('\nRunes: ${String.fromCharCodes(heart)}');
+
+  // 22. SYMBOL: A symbolic identifier
+  Symbol symbol = #myFunction;
+  print('Symbol: $symbol');
+
+  // 23. ITERABLE: A sequence you can iterate over
+  Iterable<int> iterable = [1, 2, 3, 4];
+  print('\nIterable: ${iterable.where((n) => n.isEven)}');
+
+  // 24. FUTURE: An asynchronous result
+  Future<String> futureResult = fetchData();
+  print('\nFuture result: ${await futureResult}');
+
+  // 25. STREAM: A sequence of asynchronous values
+  print('\nStream values:');
+  await for (int item in countStream()) {
+    print(item);
+  }
+
+  // 26. TYPE CHECKING with is
+  Object testValue = 'Hello';
+  if (testValue is String) {
+    print('\nType check: This is a String');
+    print(testValue.toUpperCase());
+  }
+
+  // 27. TYPE CONVERSION
+  String textNumber = '123';
+  int convertedInt = int.parse(textNumber);
+  double convertedDouble = double.parse('12.5');
+
+  print('\nConverted int: $convertedInt');
+  print('Converted double: $convertedDouble');
+  print('Number to String: ${convertedInt.toString()}');
+
+  // Safer conversion with tryParse
+  int? safeNumber = int.tryParse('abc');
+  print('Safe parsing: $safeNumber'); // null
+
+  // 28. COLLECTION OPERATIONS
+  List<int> scores = [70, 85, 90, 60];
+
+  var highScores = scores.where((score) => score >= 80).toList();
+  var doubledScores = scores.map((score) => score * 2).toList();
+
+  print('\nHigh scores: $highScores');
+  print('Doubled scores: $doubledScores');
+
+  // 29. SPREAD and COLLECTION IF
+  bool includeExtra = true;
+
+  List<String> allFruits = [
+    'Apple',
+    ...['Banana', 'Orange'],
+    if (includeExtra) 'Mango',
+  ];
+
+  print('\nSpread and collection-if: $allFruits');
+
+  // 30. GENERIC TYPE
+  Box<String> stringBox = Box<String>('Hello');
+  Box<int> intBox = Box<int>(123);
+
+  print('\nGeneric String box: ${stringBox.value}');
+  print('Generic int box: ${intBox.value}');
+
+  print('\n========== END ==========');
+}
+
+// Enum declaration
+enum Status {
+  loading,
+  success,
+  error,
+}
+
+// Custom class
+class Person {
+  String name;
+  int age;
+
+  Person(this.name, this.age);
+
+  @override
+  String toString() => 'Person(name: $name, age: $age)';
+}
+
+// Future example
+Future<String> fetchData() async {
+  await Future.delayed(const Duration(milliseconds: 100));
+  return 'Data loaded successfully';
+}
+
+// Stream example
+Stream<int> countStream() async* {
+  for (int i = 1; i <= 3; i++) {
+    await Future.delayed(const Duration(milliseconds: 50));
+    yield i;
+  }
+}
+
+// Generic class
+class Box<T> {
+  T value;
+
+  Box(this.value);
+}
